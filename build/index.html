@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.css">
+
+  <!-- intelinput -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+
+
+  <style>
+    .equal-lines {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .equal-lines::before {
+      content: '';
+      flex-grow: 1;
+    }
+
+    .equal-lines::after {
+      content: '';
+      flex-grow: 1;
+    }
+
+    /* Add this style to keep the label floating */
+    .floating-label {
+      transform: translateY(-12px) scale(0.75);
+      top: 1px;
+      left: 1px;
+      background-color: var(--label-bg-color);
+    }
+
+    /* Set custom properties for background color in dark and light mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --label-bg-color: rgb(31 41 55);
+        /* Dark background color */
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --label-bg-color: white;
+        /* Light background color */
+      }
+    }
+
+    /* form toggle */
+    .btn-toggle-form.selected-button {
+      background-color: #00cec9 !important;
+      /* Your desired background color */
+      color: white !important;
+      /* Text color for the selected button */
+      /* Add any other styling you want for the selected button */
+    }
+  </style>
+  <!-- <style>
+    .merged-inputs {
+      display: flex;
+      border: 1px solid transparent; /* Remove the border */
+      
+      
+    }
+  
+    .merged-inputs input[type="text"],
+    .merged-inputs input[type="time"] {
+      border: none; /* Remove individual input borders */
+      flex: 1; /* Allow both inputs to expand equally */
+      padding: 9px 0px; /* Adjust padding as needed */
+      outline: none; /* Remove the outline on focus */
+     
+    }
+   
+
+    /* Custom classes for rounded corners */
+  .rounded-l-l {
+    border-radius: 0.25rem 0 0 0.25rem;
+  }
+
+  .rounded-r-r {
+    border-radius: 0 0.25rem 0.25rem 0;
+  }
+  
+  </style> -->
+
+  <title>Document</title>
+  <script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  </script>
+
+</head>
+
+<body class="bg-slate-100 relative  dark:bg-gray-900">
+
+  <nav class="bg-slate-100 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-transparent">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <a href="./index.html" class="flex items-center">
+        <img src="./images/LOGO-tp.png" class="h-8 lg:h-12 md:h-16 mr-3 dark:hidden" alt="EduTask Masters™">
+        <img src="./images/logo-dark.png" class="h-8 lg:h-12 md:h-16 mr-3 hidden dark:block" alt="EduTask Masters™">
+      </a>
+      <div class="flex md:order-2">
+        <button type="button"
+          class="text-white bg-[#00cec9] hover:bg-[#81ecec] focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded-lg text-sm px-3 py-1.5 lg:px-4 lg:py-2 text-center mr-2 md:mr-0  dark:bg-[#00cec9] dark:hover:bg-[#81ecec] dark:focus:ring-green-200">Get
+          started</button>
+        <button id="theme-toggle" type="button"
+          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2 lg:p-2.5 ms-1.5 me-1.5 lg:ms-2 lg:me-2">
+          <svg id="theme-toggle-dark-icon" class="hidden w-4 h-4 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg id="theme-toggle-light-icon" class="hidden w-4 h-4 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100-2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+        <button data-collapse-toggle="navbar-sticky" type="button"
+          class="inline-flex items-center p-1.5 w-8 h-8 lg:w-10 lg:h-10 justify-center text-xs lg:text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-sticky" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-4 h-4 lg:w-5 lg:h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
+      </div>
+      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+        <ul
+          class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-slate-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a href="#"
+              class="block py-2 pl-3 pr-4 text-white bg-[#00cec9] rounded md:bg-transparent md:text-[#16a085] md:font-black md:dark:font-medium md:p-0 md:dark:text-[#00cec9]"
+              aria-current="page">Home</a>
+          </li>
+          <li>
+            <a href="#"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#00cec9] md:p-0 md:dark:hover:text-[#00cec9] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
+          </li>
+          <li>
+            <a href="#"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#00cec9] md:p-0 md:dark:hover:text-[#00cec9] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
+          </li>
+          <li>
+            <a href="#"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#00cec9] md:dark:hover:text-[#00cec9]  md:p-0 md:dark:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="w-full relative">
+      <img
+        src="https://img.freepik.com/free-photo/happy-young-african-woman-sitting-outdoors-park_171337-13624.jpg?w=996&t=st=1692110398~exp=1692110998~hmac=b367120da2c54f784737200dc8507197a06be15274c1f7703fb8802e37c305cc"
+        class="w-full h-[17rem] min-[420px]:h-[21rem] min-[510px]:h-[25rem]  sm:h-[25rem] md:h-[30rem] lg:h-[35rem] xl:h-[40rem] mt-16 md:mt-20 "
+        alt="">
+      <h1
+        class="text-white absolute top-28 max-[419px]:top-16 min-[510px]:top-36 md:top-48 lg:top-56 xl:top-64 2xl:top-60  sm:top-36 text-2xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl min-[510px]:text-3xl text-center w-full px-6">
+        <span class="equal-lines">
+          Your Comprehensive Resource for Expertly Crafted Projects, Theses, and Assignments.
+        </span>
+      </h1>
+
+    </div>
+
+    <!-- section 1 -->
+    <section class="lg:inline-flex lg:flex-row flex-col content-center">
+      <div class="flex-col w-full lg:w-3/4 px-20 p-10  lg:p-16">
+        <h1 class="text-3xl text-center text-black dark:text-white">Welcome to EduTask Masters</h1>
+        <h3 class="text-justify p-4 text-xl text-black dark:text-white">A platform where your educational success is our
+          top priority. We specialize in providing unparalleled assistance for your school projects, theses, and
+          assignments, ensuring you achieve your academic goals with confidence and excellence. Our team of dedicated
+          experts is here to guide you through every step of your learning journey, crafting personalized solutions that
+          empower you to excel. Join us on a path to educational achievement, where your aspirations become reality.
+        </h3>
+      </div>
+
+      <div class=" mx-auto mt-8 flex w-auto p-16  lg:w-2/3  lg:p-16 ">
+        <div
+          class="drop-shadow-xl focus-within:shadow-2xl hover:shadow-2xl focus-within:drop-shadow-2xl hover:drop-shadow-2xl  bg-slate-50 dark:bg-gray-800 shadow-xl p-10 ">
+
+          <div class=" rounded-md shadow-sm flex justify-center whitespace-nowrap " role="group">
+            <!-- current btn -->
+            <button type="button"
+              class="btn-toggle-form bg-white dark:bg-gray-700 text-black dark:text-white px-4 py-2  text-sm  font-medium bg-transparent border border-[#00cec9] rounded-l-lg hover:bg-[#00cecb8d] hover:text-white focus:z-10 focus:text-white dark:border-gray-600  dark:hover:text-white dark:hover:bg-[#00cecb88] dark:focus:bg-[#00cec9] selected-button">
+              Final Year Project
+            </button>
+            <button type="button"
+              class="btn-toggle-form bg-white dark:bg-gray-700 text-black dark:text-white focus:bg-[#00cec9] px-4 py-2 text-sm font-medium  bg-transparent border-t border-b border-[#00cec9] hover:bg-[#00cecb8d] hover:text-white focus:z-10 focus:text-white dark:border-gray-600  dark:hover:text-white dark:hover:bg-[#00cecb88] dark:focus:bg-[#00cec9]">
+              Thesis
+            </button>
+            <button type="button"
+              class="btn-toggle-form bg-white dark:bg-gray-700 text-black dark:text-white focus:bg-[#00cec9] px-4 py-2 text-sm font-medium  bg-transparent border border-[#00cec9] hover:bg-[#00cecb8d] hover:text-white focus:z-10 focus:text-white dark:border-gray-600  dark:hover:text-white dark:hover:bg-[#00cecb88] dark:focus:bg-[#00cec9]">
+              Dissertation
+            </button>
+            <button type="button"
+              class="btn-toggle-form bg-white dark:bg-gray-700 text-black dark:text-white focus:bg-[#00cec9] px-4 py-2 text-sm font-medium bg-transparent border border-[#00cec9] rounded-r-md hover:bg-[#00cecb8d] hover:text-white focus:z-10 focus:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-[#00cecb88] dark:focus:bg-[#00cec9]">
+              Essay Writing
+            </button>
+
+          </div>
+
+          <div class="bg-slate-50 dark:bg-gray-800 py-4  rounded  ">
+            <!-- form 1 -->
+            <form id="form1" class="form-content " method="post" action="#">
+              <div class="grid grid-cols-2 gap-4">
+                <!-- First Block -->
+                <div class="col-span-1 bg-slate-50  dark:bg-gray-800 py-4 ">
+                  <div class="relative">
+                    <input type="email" id="floating_outlined" placeholder="" required
+                      class="appearance-none dark:text-white focus:outline-none dark:bg-gray-800 peer w-full  p-2 rounded mb-4  focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label for="floating_outlined"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] dark:bg-gray-800 bg-white px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-20 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                      your Email</label>
+                  </div>
+                  <div class="relative">
+                    <input type="text" required placeholder=""
+                      class="w-full border p-2 rounded mb-4 dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label
+                      class="absolute top-0 left-2 -translate-y-1/2 text-xs dark:bg-gray-800 px-1 bg-white dark:text-gray-300 pointer-events-none transition-all transform origin-left duration-200">
+                      Your Subject Title
+                    </label>
+                  </div>
+                  <!-- date-time -->
+                  <!-- <div class="relative w-[15.5rem] me-5 mb-4">
+                        <div class="merged-inputs">
+                          <input type="text" class="rounded-l-l " placeholder="Deadline">
+                          <input type="time" class="w-1/3  rounded-r-r" placeholder="Time">
+                        </div>
+                      </div> -->
+                  <div class="relative w-64 px-1.5 -ml-1.5 py-1 mb-4 inline-flex">
+                    <div class="relative">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                        </svg>
+                      </div>
+                      <input required readonly datepicker datepicker-autohide type="text" placeholder="Deadline"
+                        class="w-full px-2 py-2  dark:bg-gray-800 dark:text-white text-center rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20 ">
+                    </div>
+                    <input required type="time" placeholder=""
+                      class="w-1/2 px-1 py-2 dark:bg-gray-800 dark:text-white  rounded-r border-l-transparent focus:border-l-transparent focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200 outline-none  ">
+                  </div>
+
+
+
+                  <!-- <input type="text" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                  <div class="relative inline-flex w-64 px-1.5 -ml-1.5">
+                    <input type="text" id="countInput"
+                      class="w-full px-3 py-2 text-start bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none  focus:border-green-500 focus:ring focus:ring-green-200"
+                      value="1 Page / 250 words" readonly>
+                    <button class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 text-3xl"
+                      type="button" id="increase">+</button>
+                    <button class="absolute right-10 -top-1.5  px-3 bg-transparent dark:text-gray-600 text-4xl"
+                      type="button" id="decrease">-</button>
+                  </div>
+                </div>
+
+                <!-- Second Block -->
+                <div class="col-span-1 bg-slate-50 py-4  dark:bg-gray-800">
+
+                  <!-- <input type="tel" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                  <div class="relative mb-4 sm:max-lg:">
+
+                    <input required id="phone1" type="tel"
+                      class="w-full  mb-4 border  rounded dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                  </div>
+
+                  <!-- <div class="">
+                        <input type="text" placeholder="" class="w-full h-40 border px-2 dark:bg-gray-800  rounded  focus:border-green-500 focus:ring focus:ring-green-200">
+                      </div> -->
+
+
+
+                  <div class="relative">
+                    <div id="floating_outlined2" contenteditable="true"
+                      class="appearance-none border border-gray-500 text-left focus:outline-none dark:bg-gray-800 peer w-full dark:text-white p-2 rounded mb-4 focus:border-green-500 focus:ring focus:ring-green-200 h-[10.3rem]"
+                      oninput="checkContent(this)"></div>
+                    <label for="floating_outlined2"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-0 origin-[0] bg-transparent px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:-top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                      Assignment Description</label>
+                  </div>
+                  <!-- Display selected file name and progress bar -->
+
+
+
+                </div>
+
+
+                <!-- Green Paper Clip Button -->
+                <label for="fileInput"
+                  class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  </svg>
+
+                  <p id="selectedFileName" class="text-gray-500 dark:text-gray-400 ms-2 text-xs">No file selected</p>
+                </label>
+
+                <!-- File Input (hidden) -->
+                <input type="file" id="fileInput" class="hidden">
+              </div>
+            </div>
+
+
+
+              <fieldset>
+                <legend class="sr-only">Checkbox variants</legend>
+
+                <div class="flex  items-center mb-2 ">
+                  <input checked required id="checkbox-1" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to
+                    the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and
+                      conditions</a>.</label>
+                </div>
+
+                <div class="flex  items-center mb-4">
+                  <input id="checkbox-2" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I want to
+                    get promotional offers</label>
+                </div>
+              </fieldset>
+
+              <div class="flex justify-center">
+                <button type="submit"
+                  class="mx-auto text-white bg-[#00cec9] hover:bg-[#81ecec] focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded text-sm w-1/3 py-3 text-center dark:bg-[#00cec9] dark:hover:bg-[#81ecec] dark:focus:ring-green-200 dark:shadow-black shadow-2xl drop-shadow-2xl focus:drop-shadow-xl">Order
+                  Expert</button>
+              </div>
+
+            </form>
+            <!-- form 2 -->
+            <form id="form2" class="form-content hidden " method="post" action="#">
+              <div class="grid grid-cols-2 gap-4">
+                <!-- First Block -->
+                <div class="col-span-1 bg-slate-50  dark:bg-gray-800 py-4 ">
+                  <div class="relative">
+                    <input type="email" id="floating_outlined" placeholder="" required
+                      class="appearance-none dark:text-white focus:outline-none dark:bg-gray-800 peer w-full  p-2 rounded mb-4  focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label for="floating_outlined"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] dark:bg-gray-800 bg-white px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-20 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                      your Email</label>
+                  </div>
+                  <div class="relative">
+                    <input type="text" required placeholder=""
+                      class="w-full border p-2 rounded mb-4 dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label
+                      class="absolute top-0 left-2 -translate-y-1/2 text-xs dark:bg-gray-800 px-1 bg-white dark:text-gray-300 pointer-events-none transition-all transform origin-left duration-200">
+                      Your Subject Title
+                    </label>
+                  </div>
+                  <!-- date-time -->
+                  <!-- <div class="relative w-[15.5rem] me-5 mb-4">
+                      <div class="merged-inputs">
+                        <input type="text" class="rounded-l-l " placeholder="Deadline">
+                        <input type="time" class="w-1/3  rounded-r-r" placeholder="Time">
+                      </div>
+                    </div> -->
+                  <div class="relative w-64 px-1.5 -ml-1.5 py-1 mb-4 inline-flex">
+                    <div class="relative">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                        </svg>
+                      </div>
+                      <input required readonly datepicker datepicker-autohide type="text" placeholder="Deadline"
+                        class="w-full px-2 py-2  dark:bg-gray-800 dark:text-white text-center rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20 ">
+                    </div>
+                    <input required type="time" placeholder=""
+                      class="w-1/2 px-1 py-2 dark:bg-gray-800 dark:text-white  rounded-r border-l-transparent focus:border-l-transparent focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200 outline-none  ">
+                  </div>
+
+
+
+                  <!-- <input type="text" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                  <div class="relative inline-flex w-64 px-1.5 -ml-1.5">
+                    <input type="text" id="countInput"
+                      class="w-full px-3 py-2 text-start bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none  focus:border-green-500 focus:ring focus:ring-green-200"
+                      value="1 Page / 250 words" readonly>
+                    <button class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 text-3xl"
+                      type="button" id="increase">+</button>
+                    <button class="absolute right-10 -top-1.5  px-3 bg-transparent dark:text-gray-600 text-4xl"
+                      type="button" id="decrease">-</button>
+                  </div>
+                </div>
+
+                <!-- Second Block -->
+                <div class="col-span-1 bg-slate-50 py-4  dark:bg-gray-800">
+                  <div class="mb-4">
+                    <!-- <input type="tel" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                    <div class="form-item">
+
+                      <input required id="phone2" type="tel"
+                        class="w-full border p-2 rounded dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                    </div>
+                  </div>
+                  <!-- <div class="">
+                      <input type="text" placeholder="" class="w-full h-40 border px-2 dark:bg-gray-800  rounded  focus:border-green-500 focus:ring focus:ring-green-200">
+                    </div> -->
+
+                  <div class="relative">
+                    <div class="relative">
+
+                      <div class="relative">
+                        <div id="floating_outlined2" contenteditable="true"
+                          class="appearance-none border border-gray-500 text-left focus:outline-none dark:bg-gray-800 peer w-full dark:text-white p-2 rounded mb-4 focus:border-green-500 focus:ring focus:ring-green-200 h-[10.3rem]"
+                          oninput="checkContent(this)"></div>
+                        <label for="floating_outlined2"
+                          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-0 origin-[0] bg-transparent px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:-top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                          Assignment Description</label>
+                      </div>
+                      <!-- Display selected file name and progress bar -->
+
+
+
+                    </div>
+
+
+                    <!-- Green Paper Clip Button -->
+                    <label for="fileInput"
+                      class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                      </svg>
+
+                      <p id="selectedFileName" class="text-gray-500 dark:text-gray-400 ms-2 text-xs">No file selected
+                      </p>
+                    </label>
+
+                    <!-- File Input (hidden) -->
+                    <input type="file" id="fileInput" class="hidden">
+                  </div>
+
+                </div>
+              </div>
+
+              <fieldset>
+                <legend class="sr-only">Checkbox variants</legend>
+
+                <div class="flex  items-center mb-2 ">
+                  <input checked required id="checkbox-1" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to
+                    the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and
+                      conditions</a>.</label>
+                </div>
+
+                <div class="flex  items-center mb-4">
+                  <input id="checkbox-2" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I want to
+                    get promotional offers</label>
+                </div>
+              </fieldset>
+
+              <div class="flex justify-center">
+                <button type="submit"
+                  class="mx-auto text-white bg-[#00cec9] hover:bg-[#81ecec] focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded text-sm w-1/3 py-3 text-center dark:bg-[#00cec9] dark:hover:bg-[#81ecec] dark:focus:ring-green-200 dark:shadow-black shadow-2xl drop-shadow-2xl focus:drop-shadow-xl">Order
+                  Expert</button>
+              </div>
+            </form>
+            <!-- form 3 -->
+            <form id="form3" class="form-content hidden">
+              <div class="grid grid-cols-2 gap-4">
+                <!-- First Block -->
+                <div class="col-span-1 bg-slate-50  dark:bg-gray-800 py-4 ">
+                  <div class="relative">
+                    <input type="email" id="floating_outlined" placeholder="" required
+                      class="appearance-none dark:text-white focus:outline-none dark:bg-gray-800 peer w-full  p-2 rounded mb-4  focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label for="floating_outlined"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] dark:bg-gray-800 bg-white px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-20 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                      your Email</label>
+                  </div>
+                  <div class="relative">
+                    <input type="text" required placeholder=""
+                      class="w-full border p-2 rounded mb-4 dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label
+                      class="absolute top-0 left-2 -translate-y-1/2 text-xs dark:bg-gray-800 px-1 bg-white dark:text-gray-300 pointer-events-none transition-all transform origin-left duration-200">
+                      Your Subject Title
+                    </label>
+                  </div>
+                  <!-- date-time -->
+                  <!-- <div class="relative w-[15.5rem] me-5 mb-4">
+                      <div class="merged-inputs">
+                        <input type="text" class="rounded-l-l " placeholder="Deadline">
+                        <input type="time" class="w-1/3  rounded-r-r" placeholder="Time">
+                      </div>
+                    </div> -->
+                  <div class="relative w-64 px-1.5 -ml-1.5 py-1 mb-4 inline-flex">
+                    <div class="relative">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                        </svg>
+                      </div>
+                      <input required readonly datepicker datepicker-autohide type="text" placeholder="Deadline"
+                        class="w-full px-2 py-2  dark:bg-gray-800 dark:text-white text-center rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20 ">
+                    </div>
+                    <input required type="time" placeholder=""
+                      class="w-1/2 px-1 py-2 dark:bg-gray-800 dark:text-white  rounded-r border-l-transparent focus:border-l-transparent focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200 outline-none  ">
+                  </div>
+
+
+
+                  <!-- <input type="text" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                  <div class="relative inline-flex w-64 px-1.5 -ml-1.5">
+                    <input type="text" id="countInput"
+                      class="w-full px-3 py-2 text-start bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none  focus:border-green-500 focus:ring focus:ring-green-200"
+                      value="1 Page / 250 words" readonly>
+                    <button class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 text-3xl"
+                      type="button" id="increase">+</button>
+                    <button class="absolute right-10 -top-1.5  px-3 bg-transparent dark:text-gray-600 text-4xl"
+                      type="button" id="decrease">-</button>
+                  </div>
+                </div>
+
+                <!-- Second Block -->
+                <div class="col-span-1 bg-slate-50 py-4  dark:bg-gray-800">
+                  <div class="mb-4">
+                    <!-- <input type="tel" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                    <div class="form-item">
+
+                      <input required id="phone3" type="tel"
+                        class="w-full border p-2 rounded dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                    </div>
+                  </div>
+                  <!-- <div class="">
+                      <input type="text" placeholder="" class="w-full h-40 border px-2 dark:bg-gray-800  rounded  focus:border-green-500 focus:ring focus:ring-green-200">
+                    </div> -->
+
+                  <div class="relative">
+                    <div class="relative">
+
+                      <div class="relative">
+                        <div id="floating_outlined2" contenteditable="true"
+                          class="appearance-none border border-gray-500 text-left focus:outline-none dark:bg-gray-800 peer w-full dark:text-white p-2 rounded mb-4 focus:border-green-500 focus:ring focus:ring-green-200 h-[10.3rem]"
+                          oninput="checkContent(this)"></div>
+                        <label for="floating_outlined2"
+                          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-0 origin-[0] bg-transparent px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:-top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                          Assignment Description</label>
+                      </div>
+                      <!-- Display selected file name and progress bar -->
+
+
+
+                    </div>
+
+
+                    <!-- Green Paper Clip Button -->
+                    <label for="fileInput"
+                      class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                      </svg>
+
+                      <p id="selectedFileName" class="text-gray-500 dark:text-gray-400 ms-2 text-xs">No file selected
+                      </p>
+                    </label>
+
+                    <!-- File Input (hidden) -->
+                    <input type="file" id="fileInput" class="hidden">
+                  </div>
+
+                </div>
+              </div>
+
+              <fieldset>
+                <legend class="sr-only">Checkbox variants</legend>
+
+                <div class="flex  items-center mb-2 ">
+                  <input checked required id="checkbox-1" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to
+                    the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and
+                      conditions</a>.</label>
+                </div>
+
+                <div class="flex  items-center mb-4">
+                  <input id="checkbox-2" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I want to
+                    get promotional offers</label>
+                </div>
+              </fieldset>
+
+              <div class="flex justify-center">
+                <button type="submit"
+                  class="mx-auto text-white bg-[#00cec9] hover:bg-[#81ecec] focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded text-sm w-1/3 py-3 text-center dark:bg-[#00cec9] dark:hover:bg-[#81ecec] dark:focus:ring-green-200 dark:shadow-black shadow-2xl drop-shadow-2xl focus:drop-shadow-xl">Order
+                  Expert</button>
+              </div>
+            </form>
+            <!-- form 4 -->
+            <form id="form4" class="form-content hidden">
+              <div class="grid grid-cols-2 gap-4">
+                <!-- First Block -->
+                <div class="col-span-1 bg-slate-50  dark:bg-gray-800 py-4 ">
+                  <div class="relative">
+                    <input type="email" id="floating_outlined" placeholder="" required
+                      class="appearance-none dark:text-white focus:outline-none dark:bg-gray-800 peer w-full  p-2 rounded mb-4  focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label for="floating_outlined"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] dark:bg-gray-800 bg-white px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-20 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                      your Email</label>
+                  </div>
+                  <div class="relative">
+                    <input type="text" required placeholder=""
+                      class="w-full border p-2 rounded mb-4 dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                    <label
+                      class="absolute top-0 left-2 -translate-y-1/2 text-xs dark:bg-gray-800 px-1 bg-white dark:text-gray-300 pointer-events-none transition-all transform origin-left duration-200">
+                      Your Subject Title
+                    </label>
+                  </div>
+                  <!-- date-time -->
+                  <!-- <div class="relative w-[15.5rem] me-5 mb-4">
+                  <div class="merged-inputs">
+                    <input type="text" class="rounded-l-l " placeholder="Deadline">
+                    <input type="time" class="w-1/3  rounded-r-r" placeholder="Time">
+                  </div>
+                </div> -->
+                  <div class="relative w-64 px-1.5 -ml-1.5 py-1 mb-4 inline-flex">
+                    <div class="relative">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                        </svg>
+                      </div>
+                      <input required readonly datepicker datepicker-autohide type="text" placeholder="Deadline"
+                        class="w-full px-2 py-2  dark:bg-gray-800 dark:text-white text-center rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20 ">
+                    </div>
+                    <input required type="time" placeholder=""
+                      class="w-1/2 px-1 py-2 dark:bg-gray-800 dark:text-white  rounded-r border-l-transparent focus:border-l-transparent focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200 outline-none  ">
+                  </div>
+
+
+
+                  <!-- <input type="text" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                  <div class="relative inline-flex w-64 px-1.5 -ml-1.5 ">
+                    <input type="text" id="countInput"
+                      class="w-full px-3 py-2 text-start bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:border focus:border-green-500 focus:ring focus:ring-green-200 "
+                      value="1 Page / 250 words" readonly>
+                    <button class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 text-3xl"
+                      type="button" id="increase">+</button>
+                    <button class="absolute right-10 -top-1.5  px-3 bg-transparent dark:text-gray-600 text-4xl"
+                      type="button" id="decrease">-</button>
+                  </div>
+                </div>
+
+                <!-- Second Block -->
+                <div class="col-span-1 bg-slate-50 py-4  dark:bg-gray-800">
+                  <div class="mb-4">
+                    <!-- <input type="tel" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
+                    <div class="form-item">
+
+                      <input required id="phone4" type="tel"
+                        class="w-full border p-2 rounded dark:text-white dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200">
+                    </div>
+                  </div>
+                  <!-- <div class="">
+                  <input type="text" placeholder="" class="w-full h-40 border px-2 dark:bg-gray-800  rounded  focus:border-green-500 focus:ring focus:ring-green-200">
+                </div> -->
+
+                  <div class="relative">
+                    <div class="relative">
+
+                      <div class="relative">
+                        <div id="floating_outlined2" contenteditable="true"
+                          class="appearance-none border border-gray-500 text-left focus:outline-none dark:bg-gray-800 peer w-full dark:text-white p-2 rounded mb-4 focus:border-green-500 focus:ring focus:ring-green-200 h-[10.3rem]"
+                          oninput="checkContent(this)"></div>
+                        <label for="floating_outlined2"
+                          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-100 top-5 z-0 origin-[0] bg-transparent px-2 peer-focus:px-1 peer-focus:text-black peer-focus:dark:text-white peer-focus:dark:bg-gray-800  peer-focus:bg-white peer-focus:z-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:-top-5 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Enter
+                          Assignment Description</label>
+                      </div>
+                      <!-- Display selected file name and progress bar -->
+
+
+                    </div>
+
+
+                    <!-- Green Paper Clip Button -->
+                    <label for="fileInput"
+                      class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                      </svg>
+
+                      <p id="selectedFileName" class="text-gray-500 dark:text-gray-400 ms-2 text-xs">No file selected
+                      </p>
+                    </label>
+
+                    <!-- File Input (hidden) -->
+                    <input type="file" id="fileInput" class="hidden">
+                  </div>
+
+                </div>
+              </div>
+
+              <fieldset>
+                <legend class="sr-only">Checkbox variants</legend>
+
+                <div class="flex  items-center mb-2 ">
+                  <input checked required id="checkbox-1" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to
+                    the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and
+                      conditions</a>.</label>
+                </div>
+
+                <div class="flex  items-center mb-4">
+                  <input id="checkbox-2" type="checkbox" value=""
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I want to
+                    get promotional offers</label>
+                </div>
+              </fieldset>
+
+              <div class="flex justify-center">
+                <button type="submit"
+                  class="mx-auto text-white bg-[#00cec9] hover:bg-[#81ecec] focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded text-sm w-1/3 py-3 text-center dark:bg-[#00cec9] dark:hover:bg-[#81ecec] dark:focus:ring-green-200 dark:shadow-black shadow-2xl drop-shadow-2xl focus:drop-shadow-xl">Order
+                  Expert</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-100  shadow dark:bg-gray-900 m-4">
+    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <a href="./index.html" class="flex items-center mb-4 sm:mb-0">
+          <img src="./images/LOGO-tp.png" class="h-14 mr-3  dark:hidden" alt="Flowbite Logo">
+          <img src="./images/logo-dark.png" class="h-14 mr-3 hidden dark:block" alt="Flowbite Logo">
+          <!-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> -->
+        </a>
+        <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+          </li>
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6 ">Licensing</a>
+          </li>
+          <li>
+            <a href="#" class="hover:underline">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+      <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/"
+          class="hover:underline">EduTask Masters™</a>. All Rights Reserved.</span>
+    </div>
+  </footer>
+
+
+  <script>
+    const toggleButtons = document.querySelectorAll('.btn-toggle-form');
+    const formContent = document.querySelectorAll('.form-content');
+
+    toggleButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        formContent.forEach(form => {
+          form.classList.add('hidden');
+        });
+
+        formContent[index].classList.remove('hidden');
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var picker = new Pikaday({
+        field: document.getElementById('datetime-picker'),
+        format: 'MM/DD/YYYY hh:mm A', // Date and time format
+        showTime: true, // Enable time picker
+        use24hour: false, // Use 12-hour format
+        autoClose: true, // Close picker on selection
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+  <script>
+    function initializePhoneNumberInput(inputId) {
+      const input = document.querySelector(inputId);
+
+      // Initialize the input with the intlTelInput plugin
+      window.intlTelInput(input, {
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+      });
+
+      // Fetch user's country location and set it as the initial country
+      window.intlTelInput(input, {
+        initialCountry: "auto",
+        geoIpLookup: callback => {
+          fetch("https://ipapi.co/json")
+            .then(res => res.json())
+            .then(data => callback(data.country_code))
+            .catch(() => callback("us"));
+        },
+        utilsScript: "/intl-tel-input/js/utils.js?1690975972744" // just for formatting/placeholders etc
+      });
+    }
+
+    // Initialize all four phone inputs
+    initializePhoneNumberInput("#phone1");
+    initializePhoneNumberInput("#phone2");
+    initializePhoneNumberInput("#phone3");
+    initializePhoneNumberInput("#phone4");
+  </script>
+
+
+
+  <script src="./js/main.js"></script>
+  <script src="../node_modules/flowbite/dist/datepicker.turbo.min.js"></script>
+  <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+</body>
+
+</html
