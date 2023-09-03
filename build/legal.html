@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal- EduTask Masters™</title> 
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (
+          localStorage.getItem("color-theme") === "dark" ||
+          (!("color-theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      </script>
+   
+
+</head>
+
+<body class="bg-slate-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+    <nav
+    class="bg-slate-100 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-transparent"
+  >
+    <div
+      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+    >
+      <a href="./index.html" class="flex items-center">
+        <img
+          src="./images/LOGO-tp.png"
+          class="h-8 lg:h-12 md:h-16 mr-3 dark:hidden"
+          alt="EduTask Masters™"
+        />
+        <img
+          src="./images/logo-dark.png"
+          class="h-8 lg:h-12 md:h-16 mr-3 hidden dark:block"
+          alt="EduTask Masters™"
+        />
+      </a>
+      <div class="flex md:order-2">
+        <button
+          type="button"
+          class="text-white bg-[#00cec9] hover:bg-[#81ecec] focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded-lg text-sm px-3 py-1.5 lg:px-4 lg:py-2 text-center mr-2 md:mr-0 dark:bg-[#00cec9] dark:hover:bg-[#81ecec] dark:focus:ring-green-200"
+        >
+          Get started
+        </button>
+        <button
+          id="theme-toggle"
+          type="button"
+          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2 lg:p-2.5 ms-1.5 me-1.5 lg:ms-2 lg:me-2"
+        >
+          <svg
+            id="theme-toggle-dark-icon"
+            class="hidden w-4 h-4 lg:w-5 lg:h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            ></path>
+          </svg>
+          <svg
+            id="theme-toggle-light-icon"
+            class="hidden w-4 h-4 lg:w-5 lg:h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100-2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+
+        <button
+          data-collapse-toggle="navbar-sticky"
+          type="button"
+          class="inline-flex items-center p-1.5 w-8 h-8 lg:w-10 lg:h-10 justify-center text-xs lg:text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-sticky"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="w-4 h-4 lg:w-5 lg:h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 17 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+        id="navbar-sticky"
+      >
+        <ul
+          class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-slate-100 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+        >
+          <li>
+            <a
+              href="index.html"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#00cec9] md:p-0 md:dark:hover:text-[#00cec9] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+            
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="about.html"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#00cec9] md:p-0 md:dark:hover:text-[#00cec9] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href="services.html"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#00cec9] md:p-0 md:dark:hover:text-[#00cec9] dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              >Services</a
+            >
+          </li>
+          <li>
+            <a
+              href="contact.html"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#00cec9] md:dark:hover:text-[#00cec9] md:p-0 md:dark:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container mx-auto p-8 mt-16 md:mt-20 px-10 md:px-40 font-sans bg-slate-100 dark:bg-gray-900">
+
+        <h1 class="text-3xl font-semibold mb-4 text-center mx-auto">Privacy Policy - EduTask Masters</h1>
+
+        <p class="mb-4">Effective Date: [Date]</p>
+
+        <p class="mb-4">EduTask Masters ("we," "us," or "our") values and respects your privacy. This Privacy Policy outlines how we collect, use, disclose, and protect your personal information when you access or use our website, products, and services. By accessing our services, you agree to the practices described in this policy.</p>
+
+        <!-- Information We Collect Section -->
+        <h2 class="text-xl font-semibold mb-2">Information We Collect</h2>
+
+        <ol class="list-decimal ml-6 mb-4 py">
+            <li>
+                <p>Personal Information: When you use our services, we may collect personal information such as your name, email address, phone number, and billing information.</p>
+            </li>
+            <li>
+                <p>Usage Information: We collect information about how you interact with our website, including the pages you visit, your IP address, device information, and browser type.</p>
+            </li>
+            <li>
+                <p>Payment Information: If you make payments through our platform, we may collect payment and billing information, including credit card details. This information is securely processed by our payment partners.</p>
+            </li>
+        </ol>
+
+        <!-- How We Use Your Information Section -->
+        <h2 class="text-xl font-semibold mb-2">How We Use Your Information</h2>
+
+        <ol class="list-decimal ml-6 mb-4">
+            <li>
+                <p>Providing Services: To deliver our educational services, process orders, and provide customer support.</p>
+            </li>
+            <li>
+                <p>Improving Services: To analyze usage patterns, enhance our services, and develop new features.</p>
+            </li>
+            <li>
+                <p>Communication: To send you service updates, promotional materials, and respond to inquiries.</p>
+            </li>
+            <li>
+                <p>Payment Processing: To process payments and prevent fraudulent transactions.</p>
+            </li>
+            <li>
+                <p>Legal Obligations: To comply with legal obligations and protect our rights and interests.</p>
+            </li>
+        </ol>
+
+        <!-- Information Sharing Section -->
+        <h2 class="text-xl font-semibold mb-2">Information Sharing</h2>
+
+        <p class="mb-4">We do not sell, trade, or rent your personal information to third parties. We may share your information with:</p>
+
+        <ol class="list-decimal ml-6 mb-4">
+            <li>
+                <p>Service Providers: Trusted third-party service providers who assist in our operations.</p>
+            </li>
+            <li>
+                <p>Legal Requirements: To comply with legal obligations and protect against fraud or security threats.</p>
+            </li>
+        </ol>
+
+        <!-- Your Choices Section -->
+        <h2 class="text-xl font-semibold mb-2">Your Choices</h2>
+
+        <p class="mb-4">You have the following choices regarding your personal information:</p>
+
+        <ol class="list-decimal ml-6 mb-4">
+            <li>
+                <p>Access and Update: You can access and update your personal information by logging into your account.</p>
+            </li>
+            <li>
+                <p>Marketing Communications: You can opt out of marketing communications by following the instructions provided in the emails.</p>
+            </li>
+        </ol>
+
+        <!-- Security Section -->
+        <h2 class="text-xl font-semibold mb-2">Security</h2>
+
+        <p class="mb-4">We implement security measures to protect your personal information. However, no data transmission over the internet can be guaranteed as completely secure.</p>
+
+        <!-- Cookies Section -->
+        <h2 class="text-xl font-semibold mb-2">Cookies</h2>
+
+        <p class="mb-4">We may use cookies and similar tracking technologies to enhance your experience on our website.</p>
+
+        <!-- Changes to this Privacy Policy Section -->
+        <h2 class="text-xl font-semibold mb-2">Changes to this Privacy Policy</h2>
+
+        <p class="mb-4">We may update this Privacy Policy periodically. We will notify you of significant changes via email or a prominent notice on our website.</p>
+
+        <!-- Contact Us Section -->
+        <h2 class="text-xl font-semibold mb-2">Contact Us</h2>
+
+        <p class="mb-4">If you have questions or concerns about this Privacy Policy, please contact us at <a href="mailto:[contact email]">[contact email]</a>.</p>
+
+        <p class="mb-4" id="Terms">This Privacy Policy applies to EduTask Masters and its services in Nigeria. It is intended to inform users of our data collection and usage practices. By using our services, you consent to the terms outlined in this Privacy Policy.</p>
+
+        <p class="mb-4"  >Last updated: [Date]</p>
+
+    </div>
+
+
+
+    <header class=" py-4 font-sans" >
+        <div class="container mx-auto text-center" >
+            <h1 class="text-3xl font-semibold">Terms and Conditions</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6 mt-6 px-10 md:px-40 font-sans">
+        <section class="prose dark:prose-dark space-y-6">
+            <h2>Effective Date: [Date]</h2>
+
+            <h2>1. Acceptance of Terms and Conditions</h2>
+            <p>
+                By accessing or using EduTask Masters' services, including the website, products, and offerings, you agree to comply with and be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our services.
+            </p>
+
+            <h2>2. Definitions</h2>
+            <p>
+                EduTask Masters: Refers to the online platform and services provided by EduTask Masters, an educational assistance service based in Nigeria.
+            </p>
+
+            <h2>3. User Eligibility</h2>
+            <p>
+                You must be at least 18 years old or have the legal capacity to enter into binding contracts to use our services. By using our services, you confirm that you meet these eligibility requirements.
+            </p>
+
+            <h2>4. Service Description</h2>
+            <p>
+                EduTask Masters provides educational assistance services, including but not limited to assignment help, essay writing, and dissertation assistance. These services are intended to assist students in their academic pursuits.
+            </p>
+
+            <h2>5. User Responsibilities</h2>
+            <p>
+                You are responsible for providing accurate and up-to-date information when using our services.
+            </p>
+            <p>
+                You agree not to use our services for any illegal or unauthorized purpose.
+            </p>
+            <p>
+                You must not engage in any form of academic dishonesty, including plagiarism, when using our services.
+            </p>
+
+            <h2>6. Pricing and Payment</h2>
+            <p>
+                Pricing for our services is provided on our website and is subject to change without notice.
+            </p>
+            <p>
+                Payments for our services are processed securely through trusted payment partners.
+            </p>
+            <p>
+                All fees are non-refundable once services have been provided.
+            </p>
+
+            <h2>7. Confidentiality</h2>
+            <p>
+                EduTask Masters respects your privacy and confidentiality. We do not share your personal information with third parties, except as outlined in our Privacy Policy.
+            </p>
+
+            <h2>8. Intellectual Property</h2>
+            <p>
+                All content and materials provided through our services are protected by intellectual property laws. You may not use, reproduce, or distribute our content without our express written consent.
+            </p>
+
+            <h2>9. Termination</h2>
+            <p>
+                We reserve the right to terminate or suspend your access to our services at our discretion, without notice, for any violation of these terms.
+            </p>
+
+            <h2>10. Limitation of Liability</h2>
+            <p>
+                EduTask Masters and its affiliates are not liable for any indirect, incidental, special, or consequential damages resulting from the use of our services.
+            </p>
+
+            <h2>11. Governing Law</h2>
+            <p>
+                These terms and conditions are governed by the laws of Nigeria. Any disputes arising from these terms will be subject to the jurisdiction of Nigerian courts.
+            </p>
+
+            <h2>12. Changes to Terms and Conditions</h2>
+            <p>
+                EduTask Masters may update these terms and conditions at any time. We will notify users of significant changes via email or by posting a notice on our website.
+            </p>
+
+            <h2>13. Contact Information</h2>
+            <p>
+                For questions or concerns about these terms and conditions, please contact us at [contact email].
+            </p>
+
+            <h2>14. Entire Agreement</h2>
+            <p>
+                These terms and conditions constitute the entire agreement between you and EduTask Masters regarding the use of our services.
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-slate-100 shadow dark:bg-gray-900 m-4">
+        <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+          <div class="sm:flex sm:items-center sm:justify-between">
+            <a href="./index.html" class="flex items-center mb-4 sm:mb-0">
+              <img
+                src="./images/LOGO-tp.png"
+                class="h-14 mr-3 dark:hidden"
+                alt="EduTask Masters Logo"
+              />
+              <img
+                src="./images/logo-dark.png"
+                class="h-14 mr-3 hidden dark:block"
+                alt="EduTask Masters Logo"
+              />
+              <!-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> -->
+            </a>
+            <ul
+              class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400"
+            >
+              <li>
+                <a href="about.html" class="mr-4 hover:underline md:mr-6">About</a>
+              </li>
+              <li>
+                <a href="legal.html" class="mr-4 hover:underline md:mr-6"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a href="licensing.html" class="mr-4 hover:underline md:mr-6">Licensing</a>
+              </li>
+              <li>
+                <a href="contact.html" class="hover:underline">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <hr
+            class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"
+          />
+          <span
+            class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
+            >© 2023
+            <a href="index.html" class="hover:underline"
+              >EduTask Masters™</a
+            >. All Rights Reserved.</span
+          >
+        </div>
+      </footer>
+
+
+      <script src="./js/main.js"></script>
+      <script src="../node_modules/flowbite/dist/datepicker.turbo.min.js"></script>
+      <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+</body>
+
+</html>
