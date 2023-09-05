@@ -1300,6 +1300,7 @@ buttons.forEach((button) => {
       });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
     <script src="../node_modules/intl-tel-input/build/js/intlTelInput.min.js"></script>
     <script>
       function initializePhoneNumberInput(inputId) {
@@ -1307,7 +1308,7 @@ buttons.forEach((button) => {
 
         // Initialize the input with the intlTelInput plugin
         const iti = intlTelInput(input, {
-          utilsScript: "../node_modules/intl-tel-input/build/js/utils.js",
+          utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
         });
 
         // Fetch user's country location and set it as the initial country
