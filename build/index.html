@@ -15,6 +15,11 @@
     />
 
     <style>
+      input[type="time"]::-webkit-calendar-picker-indicator{
+  filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);
+}
+
+
       .equal-lines {
         display: flex;
         flex-direction: column;
@@ -400,26 +405,24 @@
                     <div class="relative inline-flex w-full mb">
                       <input
                         type="text"
-                        id="countInput"
-                        class="w-full py-2 text-start lg:max-xl:text-xs lg:max-xl:py-3 bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+                        class="count-input w-full py-2 text-start lg:max-xl:text-xs lg:max-xl:py-3 bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
                         value="1 Page / 250 words"
                         readonly
                       />
                       <button
-                        class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-xl  lg:max-xl:py-1 text-3xl"
+                        class="increase-button absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-xl lg:max-xl:py-1 text-3xl"
                         type="button"
-                        id="increase"
                       >
                         +
                       </button>
                       <button
-                        class="absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-2xl  lg:max-xl:py-1.5  lg:max-xl:-mr-3.5  text-4xl"
+                        class="decrease-button absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-2xl lg:max-xl:py-1.5 lg:max-xl:-mr-3.5 text-4xl"
                         type="button"
-                        id="decrease"
                       >
                         -
                       </button>
                     </div>
+                    
                   </div>
 
                   <!-- Second Block -->
@@ -458,9 +461,9 @@
 
                   <!-- Green Paper Clip Button -->
                   <label
-                    for="fileInput"
-                    class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
-                  >
+                  for="fileInput1"
+                  class="file-label absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
+                >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="15"
@@ -480,16 +483,15 @@
                       ></path>
                     </svg>
 
-                    <p
-                      id="selectedFileName"
-                      class="text-gray-500 dark:text-gray-400 ms-2 text-xs"
-                    >
+                    <p id="selectedFileName1" class="file-text text-gray-500 dark:text-gray-400 ms-2 text-xs">
                       No file selected
                     </p>
+                
+                     
                   </label>
 
                   <!-- File Input (hidden) -->
-                  <input type="file" id="fileInput" class="hidden" />
+                  <input type="file" id="fileInput1" class="file-input hidden" />
                 </div>
               </div>
             </div>
@@ -610,7 +612,7 @@
                           datepicker-autohide
                           type="text"
                           placeholder="Deadline"
-                          class="w-full py-2 dark:bg-gray-800 dark:text-white text-center rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20"
+                          class="w-full py-2 dark:bg-gray-800 dark:text-white text-center lg:max-xl:text-xs lg:max-xl:ps-8 lg:max-xl:py-3 xl:pl-5 rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20"
                         />
                       </div>
                       <input
@@ -622,29 +624,27 @@
                     </div>
 
                     <!-- <input type="text" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
-                    <div class="relative inline-flex w-full">
+                    <div class="relative inline-flex w-full mb">
                       <input
                         type="text"
-                        id="countInput"
-                        class="w-full py-2 text-start bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+                        class="count-input w-full py-2 text-start lg:max-xl:text-xs lg:max-xl:py-3 bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
                         value="1 Page / 250 words"
                         readonly
                       />
                       <button
-                        class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 text-3xl"
+                        class="increase-button absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-xl lg:max-xl:py-1 text-3xl"
                         type="button"
-                        id="increase"
                       >
                         +
                       </button>
                       <button
-                        class="absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 text-4xl"
+                        class="decrease-button absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-2xl lg:max-xl:py-1.5 lg:max-xl:-mr-3.5 text-4xl"
                         type="button"
-                        id="decrease"
                       >
                         -
                       </button>
                     </div>
+                    
                   </div>
 
                   <!-- Second Block -->
@@ -684,9 +684,9 @@
 
                       <!-- Green Paper Clip Button -->
                       <label
-                        for="fileInput"
-                        class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
-                      >
+                      for="fileInput2"
+                      class="file-label absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
+                    >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="15"
@@ -706,16 +706,13 @@
                           ></path>
                         </svg>
 
-                        <p
-                          id="selectedFileName"
-                          class="text-gray-500 dark:text-gray-400 ms-2 text-xs"
-                        >
+                        <p id="selectedFileName2" class="file-text text-gray-500 dark:text-gray-400 ms-2 text-xs">
                           No file selected
                         </p>
                       </label>
 
                       <!-- File Input (hidden) -->
-                      <input type="file" id="fileInput" class="hidden" />
+                      <input type="file" id="fileInput2" class="file-input hidden" />
                     </div>
                   </div>
                 </div>
@@ -831,7 +828,7 @@
                           datepicker-autohide
                           type="text"
                           placeholder="Deadline"
-                          class="w-full py-2 dark:bg-gray-800 dark:text-white text-center rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20"
+                          class="w-full py-2 dark:bg-gray-800 dark:text-white text-center lg:max-xl:text-xs lg:max-xl:ps-8 lg:max-xl:py-3 xl:pl-5 rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20"
                         />
                       </div>
                       <input
@@ -843,29 +840,27 @@
                     </div>
 
                     <!-- <input type="text" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
-                    <div class="relative inline-flex w-full">
+                    <div class="relative inline-flex w-full mb">
                       <input
                         type="text"
-                        id="countInput"
-                        class="w-full py-2 text-start bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+                        class="count-input w-full py-2 text-start lg:max-xl:text-xs lg:max-xl:py-3 bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
                         value="1 Page / 250 words"
                         readonly
                       />
                       <button
-                        class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 text-3xl"
+                        class="increase-button absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-xl lg:max-xl:py-1 text-3xl"
                         type="button"
-                        id="increase"
                       >
                         +
                       </button>
                       <button
-                        class="absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 text-4xl"
+                        class="decrease-button absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-2xl lg:max-xl:py-1.5 lg:max-xl:-mr-3.5 text-4xl"
                         type="button"
-                        id="decrease"
                       >
                         -
                       </button>
                     </div>
+                    
                   </div>
 
                   <!-- Second Block -->
@@ -905,9 +900,9 @@
 
                       <!-- Green Paper Clip Button -->
                       <label
-                        for="fileInput"
-                        class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
-                      >
+  for="fileInput3"
+  class="file-label absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
+>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="15"
@@ -927,16 +922,14 @@
                           ></path>
                         </svg>
 
-                        <p
-                          id="selectedFileName"
-                          class="text-gray-500 dark:text-gray-400 ms-2 text-xs"
-                        >
+                        <p id="selectedFileName3" class="file-text text-gray-500 dark:text-gray-400 ms-2 text-xs">
                           No file selected
                         </p>
                       </label>
 
                       <!-- File Input (hidden) -->
-                      <input type="file" id="fileInput" class="hidden" />
+                      <input type="file" id="fileInput3" class="file-input hidden" />
+
                     </div>
                   </div>
                 </div>
@@ -1052,7 +1045,7 @@
                           datepicker-autohide
                           type="text"
                           placeholder="Deadline"
-                          class="w-full py-2 dark:bg-gray-800 dark:text-white text-center rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20"
+                          class="w-full py-2 dark:bg-gray-800 dark:text-white text-center lg:max-xl:text-xs lg:max-xl:ps-8 lg:max-xl:py-3 xl:pl-5 rounded-l border-r-transparent focus:border-r-transparent focus:border-green-500 focus:ring focus:ring-green-200 outline-none placeholder-shown:z-20"
                         />
                       </div>
                       <input
@@ -1064,29 +1057,27 @@
                     </div>
 
                     <!-- <input type="text" placeholder="" class="w-full border p-2 rounded dark:bg-gray-800 focus:border-green-500 focus:ring focus:ring-green-200"> -->
-                    <div class="relative inline-flex w-full">
+                    <div class="relative inline-flex w-full mb">
                       <input
                         type="text"
-                        id="countInput"
-                        class="w-full py-2 text-start bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
+                        class="count-input w-full py-2 text-start lg:max-xl:text-xs lg:max-xl:py-3 bg-white dark:bg-gray-800 dark:text-gray-300 rounded focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200"
                         value="1 Page / 250 words"
                         readonly
                       />
                       <button
-                        class="absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 text-3xl"
+                        class="increase-button absolute right-0 -top-0.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-xl lg:max-xl:py-1 text-3xl"
                         type="button"
-                        id="increase"
                       >
                         +
                       </button>
                       <button
-                        class="absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 text-4xl"
+                        class="decrease-button absolute right-10 -top-1.5 px-3 bg-transparent dark:text-gray-600 lg:max-xl:text-2xl lg:max-xl:py-1.5 lg:max-xl:-mr-3.5 text-4xl"
                         type="button"
-                        id="decrease"
                       >
                         -
                       </button>
                     </div>
+                    
                   </div>
 
                   <!-- Second Block -->
@@ -1126,9 +1117,9 @@
 
                       <!-- Green Paper Clip Button -->
                       <label
-                        for="fileInput"
-                        class="absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
-                      >
+                      for="fileInput4"
+                      class="file-label absolute inline-flex bottom-2 left-0 p-2 cursor-pointer text-green-500 hover:text-green-600"
+                    >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="15"
@@ -1148,16 +1139,14 @@
                           ></path>
                         </svg>
 
-                        <p
-                          id="selectedFileName"
-                          class="text-gray-500 dark:text-gray-400 ms-2 text-xs"
-                        >
+                        <p id="selectedFileName4" class="file-text text-gray-500 dark:text-gray-400 ms-2 text-xs">
                           No file selected
                         </p>
                       </label>
 
                       <!-- File Input (hidden) -->
-                      <input type="file" id="fileInput" class="hidden" />
+                      <input type="file" id="fileInput4" class="file-input hidden" />
+
                     </div>
                   </div>
                 </div>
@@ -1277,6 +1266,25 @@
           formContent[index].classList.remove("hidden");
         });
       });
+
+      // form toggle
+  
+  // Get references to your buttons
+  const buttons = document.querySelectorAll('.btn-toggle-form');
+
+// Add a click event listener to each button
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    // Remove the 'selected-button' class from all buttons
+    buttons.forEach((btn) => btn.classList.remove('selected-button'));
+    
+    // Add the 'selected-button' class to the clicked button
+    button.classList.add('selected-button');
+    
+    // You can also handle form toggling logic here
+  });
+});
+
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {

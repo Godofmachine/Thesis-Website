@@ -40,37 +40,37 @@ themeToggleBtn.addEventListener('click', function() {
 });
 
 
-const decreaseButton = document.getElementById('decrease');
-        const increaseButton = document.getElementById('increase');
-        const countInput = document.getElementById('countInput');
+// Get all elements with the class names
+const countInputs = document.querySelectorAll('.count-input');
+const increaseButtons = document.querySelectorAll('.increase-button');
+const decreaseButtons = document.querySelectorAll('.decrease-button');
 
-        let pageCount = 1;
-        let wordCount = 250;
+// Function to update the input value based on the buttons clicked
+function updateInputValue(input, pageCount, wordCount) {
+  const inputValue = `${pageCount} Page${pageCount > 1 ? 's' : ''} / ${wordCount} words`;
+  input.value = inputValue;
+}
 
-        // Update the input value based on the page and word counts
-        function updateInputValue() {
-            const inputValue = `${pageCount} Page${pageCount > 1 ? 's' : ''} / ${wordCount} words`;
-            countInput.value = inputValue;
-        }
+// Event listener for all increase buttons
+increaseButtons.forEach((button, index) => {
+  button.addEventListener('click', () => {
+    const pageCount = parseInt(countInputs[index].value, 10);
+    const wordCount = (pageCount + 1) * 250;
+    updateInputValue(countInputs[index], pageCount + 1, wordCount);
+  });
+});
 
-        // Event listener for increasing the page count
-        increaseButton.addEventListener('click', () => {
-            pageCount++;
-            wordCount = pageCount * 250; // Corrected calculation
-            updateInputValue();
-        });
+// Event listener for all decrease buttons
+decreaseButtons.forEach((button, index) => {
+  button.addEventListener('click', () => {
+    const pageCount = parseInt(countInputs[index].value, 10);
+    if (pageCount > 1) {
+      const wordCount = (pageCount - 1) * 250;
+      updateInputValue(countInputs[index], pageCount - 1, wordCount);
+    }
+  });
+});
 
-        // Event listener for decreasing the page count
-        decreaseButton.addEventListener('click', () => {
-            if (pageCount > 1) {
-                pageCount--;
-                wordCount = pageCount * 250; // Corrected calculation
-                updateInputValue();
-            }
-        });
-
-        // Initial update
-        updateInputValue();
 
 
 
@@ -160,16 +160,24 @@ const decreaseButton = document.getElementById('decrease');
 
 
     // Function to display selected file name
-    document.getElementById("fileInput").addEventListener("change", function () {
-        const selectedFile = this.files[0];
-        const selectedFileName = document.getElementById("selectedFileName");
+  // Get all file input elements with the class "file-input"
+const fileInputElements = document.querySelectorAll('.file-input');
 
-        if (selectedFile) {
-            selectedFileName.textContent = selectedFile.name;
-        } else {
-            selectedFileName.textContent = "No file selected";
-        }
-    });
+// Loop through each file input element and attach the change event listener
+fileInputElements.forEach((fileInputElement, index) => {
+  const selectedFileName = document.getElementById(`selectedFileName${index + 1}`);
+
+  fileInputElement.addEventListener('change', function () {
+    const selectedFile = this.files[0];
+
+    if (selectedFile) {
+      selectedFileName.textContent = selectedFile.name;
+    } else {
+      selectedFileName.textContent = "No file selected";
+    }
+  });
+});
+
 
     // Function to simulate file upload progress (for demonstration purposes)
     function simulateFileUploadProgress() {
@@ -195,30 +203,23 @@ const decreaseButton = document.getElementById('decrease');
  
     // Check contenteditable content and toggle label
     function checkContent(element) {
-        const label = document.querySelector('label[for="floating_outlined2"]');
+        const label = element.nextElementSibling; // Get the next sibling element (the label)
         if (element.textContent.trim() !== '') {
-            label.classList.add('floating-label');
+          label.classList.add('floating-label');
         } else {
-            label.classList.remove('floating-label');
+          label.classList.remove('floating-label');
         }
-    }
-// form toggle
-  
-  // Get references to your buttons
-  const buttons = document.querySelectorAll('.btn-toggle-form');
-
-  // Add a click event listener to each button
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      // Remove the 'selected-button' class from all buttons
-      buttons.forEach((btn) => btn.classList.remove('selected-button'));
+      }
       
-      // Add the 'selected-button' class to the clicked button
-      button.classList.add('selected-button');
+      // Add event listeners to all elements with class "floating-outlined"
+      const contentEditableElements = document.querySelectorAll('.floating-outlined');
       
-      // You can also handle form toggling logic here
-    });
-  });
+      contentEditableElements.forEach((element) => {
+        element.addEventListener('input', () => {
+          checkContent(element);
+        });
+      });
+      
 
 
 
