@@ -17,7 +17,7 @@
     "prettier": "npx prettier --write **/*.html"
   },
   "keywords": [],
-  "author": "",
+  "author": "Blueking",
   "license": "ISC",
   "description": ""
 }
