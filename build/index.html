@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"  rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css"> -->
 
 
     <!-- intelinput -->
     <link
       rel="stylesheet"
-      href="../node_modules/intl-tel-input/build/css/intlTelInput.css"
+      href="./intl-tel-input/build/css/intlTelInput.css"
     />
 
     <style>
@@ -48,12 +48,12 @@
       }
 
       .iti__flag {
-        background-image: url("../node_modules/intl-tel-input/build/img/flags.png");
+        background-image: url("intl-tel-input/build/img/flags.png");
       }
 
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
         .iti__flag {
-          background-image: url("../node_modules/intl-tel-input/build/img/flags@2x.png");
+          background-image: url("intl-tel-input/build/img/flags@2x.png");
         }
       }
 
@@ -1300,15 +1300,14 @@ buttons.forEach((button) => {
       });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
-    <script src="../node_modules/intl-tel-input/build/js/intlTelInput.min.js"></script>
+    <script src="intl-tel-input/build/js/intlTelInput.min.js"></script>
     <script>
       function initializePhoneNumberInput(inputId) {
         const input = document.querySelector(inputId);
 
         // Initialize the input with the intlTelInput plugin
         const iti = intlTelInput(input, {
-          utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+          utilsScript: "intl-tel-input/build/js/utils.js",
         });
 
         // Fetch user's country location and set it as the initial country
