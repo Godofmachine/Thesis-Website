@@ -1326,7 +1326,12 @@ buttons.forEach((button) => {
       initializePhoneNumberInput("#phone4");
     </script>
 
-
+<script>
+  const input = document.querySelector("#phone1", "#phone2", "#phone3", "#phone4");
+  window.intlTelInput(input, {
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+  });
+</script>
 
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
