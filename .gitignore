@@ -1,2 +1,2 @@
 node_modules/*
-!node_modules/intlTelInput
+!node_modules/intl-tel-input
