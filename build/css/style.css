@@ -2112,6 +2112,10 @@ input:checked + .toggle-bg {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
+.bg-primary-green {
+  background-color: #00cec9;
+}
+
 .placeholder-shown\:z-20:-moz-placeholder-shown {
   z-index: 20;
 }
